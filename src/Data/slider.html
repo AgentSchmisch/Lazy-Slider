@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+<title>Lazy Slider</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<form action="https://webhook.site/2c61e552-bfee-49d8-89b1-d3260ba9eaab" method=POST>
+	<div type="slider">
+		<h2>Geschwindigkeit</h2>
+		<input type="range" name="Geschwindigkeit" min="0" max="360" step="15" value="0"><br>
+		<h2>Winkel</h2>
+		<input type="range" name="winkel" min="0" max="150" step="15" value="0"><br>
+	</div>
+	<div type="drehrichtung">
+		<h2>Drehrichtung</h2>
+		<input type="checkbox" name="Drehrichtung" value="rechts">
+	</div>
+	<div type="bestaetigen">
+		<h2>Bestätigen</h2>
+		<input type="submit" value="Submit request" id="submitBtn"/>  
+	</div>
+
+	<script>
+		document.getElementById("submitBtn").addEventListener("click", myFunction);  
+		function myFunction() {  
+		  window.location.href="http://google.com";  
+		}
+	</script>
+
+</form>
+
+</body>
+
+</html>

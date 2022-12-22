@@ -33,3 +33,10 @@
 
 #secrets
 config.h
+/LazySlider/LazySlider.vcxproj
+/LazySlider/LazySlider.vcxproj.filters
+/LazySlider/LazySlider.vcxproj.user
+.vs
+/LazySlider/__vm
+/LazySlider/.vs/LazySlider/v16
+.pio

@@ -9,11 +9,7 @@
     align-items: center;
     background: #000;
 }
-/*
-h1{
-    color:white;
-}
-*/
+
 .glow-on-hover {
     width: 220px;
     height: 50px;
@@ -75,21 +71,22 @@ h1{
     100% { background-position: 0 0; }
 }
 
-.header{
-    position:absolute;
-    bottom:5%;
-    
+h1{
+color: white;
+}
 
-
+h2{
+    text-align:center;
 }
 
 /* styles for elements that are common for the function pages*/
 
 .box{
-
+    width: 50%;
+    position:relative;
     background-color: rgba(187, 187, 187, 0.644);
     border-radius: 1%;
-    
+    align-items: center;
 }
 
 /*Turntable styling*/
@@ -97,12 +94,14 @@ h1{
 
 .bodyturntable{
 
+    background-color: #000;
+
     
 }
 
 
 .range{
-
+    
 }
 
 .checkbox{

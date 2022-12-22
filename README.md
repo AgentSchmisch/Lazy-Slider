@@ -33,3 +33,9 @@ In order to setup the project quickly and easily it is mandatory to make some pr
 
 - if you want to use a static IP Address in the `credentials.h` file
 - therefore you just have to set the variable `STATIC`to `true` and enter the IP Address and the Gateway that you want to have the ESP8266 running on
+
+### english UI
+
+- the UI is currently written in german, I am planning on adding a english version of the UI as well, if you want to use that you will find it in a folder called UI/en-en
+- just copy the files to the folder src/Data and SPIFFS will use them just like the german source files
+- `style.css` is the same for the english and german version of the pages

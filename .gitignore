@@ -40,3 +40,4 @@ config.h
 /LazySlider/__vm
 /LazySlider/.vs/LazySlider/v16
 .pio
+.vscode

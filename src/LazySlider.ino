@@ -1,11 +1,30 @@
+/*##############################################
+  used pins:
+  
+  Stepper Motor:
+  D12
+  D13
+  D14
+  D15
+  
+  Endstop switches for slider:
+  D9
+  D10
+
+*/
+
+
 #include "config.h"
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WiFiMulti.h>
 #include <ESP8266mDNS.h>
 #include <ESP8266WebServer.h>
-//#include <ESPAsyncWebServer.h>
 #include <FS.h>   // Include the SPIFFS library
+#include <Stepper.h>
+
+Stepper stepper = Stepper(500,12,13,14,15)
+
 
 ESP8266WiFiMulti wifiMulti;     // Create an instance of the ESP8266WiFiMulti class, called 'wifiMulti'
 ESP8266WebServer server(80);    // Create a webserver object that listens for HTTP request on port 80
@@ -92,6 +111,26 @@ bool handleFileRead(String path) { // send the right file to the client (if it e
 
 
 void slider(){
+  //redirect to the slider menu page
+  redirect("/slider.html");
+  //get the returned values for the slider
+  if(server.hasArg("direction"))
+    String direction=server.arg("direction");
+
+  String speed=server.arg("speed");
+  String time=server.arg("time");
+  
+  
+  
+  //set the pins for the variables and whether they are in- or output pins
+  int endstop1=9;
+  int endstop2=10;
+  pinMode(endstop1,INPUT_PULLUP);
+  pinMode(endstop2,INPUT_PULLUP);
+
+  
+
+
 
 
 
@@ -99,8 +138,20 @@ void slider(){
 }
 
 void turntable(){
+  redirect("/turntable.html");
+  if(server.hasArg("direction"))
+  String direction=server.arg("direction");
 
 
+  String speed=server.arg("speed");
+  String time=server.arg("time");
+  stepper.setspeed(int(speed)*(int(time)*60));
+  
+  if(direction=="right")
+    stepper.step(-500);
+  
+  else
+  stepper.step(500);
 
 
 }
@@ -108,3 +159,15 @@ void turntable(){
 void handlenotfound(){
 server.send(404,"text/plain","404: Page not found");
 }
+
+void redirect(string location){
+server.sendHeader("Location", String("/"+location), true);
+server.send ( 302, "text/html", "");
+}
+
+
+//documentation step()
+//This function turns the motor a specific number of steps, at a speed determined by the most recent call to setSpeed().
+//This function is blocking; that is, it will wait until the motor has finished moving to pass control to the next line in your sketch.
+//For example, if you set the speed to, say, 1 RPM and called step(100) on a 100-step motor, this function would take a full minute to run.
+//For better control, keep the speed high and only go a few steps with each call to step().

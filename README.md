@@ -9,11 +9,23 @@ This Project contains all the Arduino Sketches as well as the server files that 
 
 ## Prerequisites
 
+### Arduino IDE
+
 In order to setup the project quickly and easily it is mandatory to make some preparations
 
 - Setup the ESP8266 in the Arduino IDE as it is shown [here](https://randomnerdtutorials.com/how-to-install-esp8266-board-arduino-ide/)
 - install the SPIFFS library in the Arduino IDE [here](https://github.com/esp8266/arduino-esp8266fs-plugin)
 - clone this repository
+
+### PlatformIO in Visual Studio Code
+
+In order to set up the Project in VS Code you can follow these steps
+- Install the latest version of Visual Studio Code [here](https://code.visualstudio.com/)
+- Setup PlatformIO in VS Code
+    - go to the extensions tab in VS Code and search for PlatformIO 
+    - install the extension 
+    - open the repository from GitHub
+    - compile and Upload the project to your microcontroller
 
 ## Installation
 

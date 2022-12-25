@@ -23,7 +23,7 @@
 #include <FS.h>   // Include the SPIFFS library
 #include <Stepper.h>
 
-Stepper stepper = Stepper(500,12,13,14,15)
+Stepper stepper = Stepper(500,12,13,14,15);
 
 
 ESP8266WiFiMulti wifiMulti;     // Create an instance of the ESP8266WiFiMulti class, called 'wifiMulti'
@@ -37,12 +37,18 @@ void setup() {
   Serial.begin(115200);         // Start the Serial communication to send messages to the computer
   delay(10);
   Serial.println('\n');
-  
+  IPAddress IPADDRESS(_IPADDRESS);
+  IPAddress GATEWAY(_GATEWAY);
+  IPAddress SUBNET(_SUBNET);
+
 if(STATICIP){
-   if (!WiFi.config(_IPADDRESS, _GATEWAY, _SUBNET)) {
+  
+   if (!WiFi.config(IPADDRESS, GATEWAY, SUBNET)) {
     Serial.println("STA Failed to configure");
-  }
+    }
+    Serial.println("success");
 }
+
 
  wifiMulti.addAP(WIFI_SSID1, WIFI_PASSWORD1);   // add Wi-Fi networks you want to connect to
  wifiMulti.addAP(WIFI_SSID2, WIFI_PASSWORD2);
@@ -77,7 +83,7 @@ if(STATICIP){
   
   server.on("/api/v1/slider",HTTP_POST,slider);
   server.on("/api/v1/turntable",HTTP_POST,turntable);
-  server.onNotFound(handlenotfound);
+  //server.on()
 }
 
 
@@ -113,8 +119,8 @@ void handlenotfound(){
 server.send(404,"text/plain","404: Page not found");
 }
 
-void redirect(string location){
-server.sendHeader("Location", String("/"+location), true);
+void redirect(String location){
+server.sendHeader("Location", String("localhost:80/"+location), true);
 server.send ( 302, "text/html", "");
 }
 
@@ -124,3 +130,51 @@ server.send ( 302, "text/html", "");
 //This function is blocking; that is, it will wait until the motor has finished moving to pass control to the next line in your sketch.
 //For example, if you set the speed to, say, 1 RPM and called step(100) on a 100-step motor, this function would take a full minute to run.
 //For better control, keep the speed high and only go a few steps with each call to step().
+// functions for the turntable
+//TODO: change the library from <stepper.h> to the A4988 library
+
+void turntable(){
+
+  String direction;
+  redirect("turntable.html");
+  if(server.hasArg("direction"))
+  direction=server.arg("direction");
+
+
+  String speed=server.arg("speed");
+  String time=server.arg("time");
+  Serial.println(speed);
+  Serial.println(time);
+  Serial.println(direction);
+
+  stepper.setSpeed(speed.toInt()*(time.toInt()*60));
+  
+    if(direction=="right")
+    stepper.step(-500);
+  
+  else
+  stepper.step(500);
+
+
+}
+
+
+void slider(){
+  //redirect to the slider menu page
+  redirect("slider.html");
+  //get the returned values for the slider
+  if(server.hasArg("direction"))
+    String direction=server.arg("direction");
+
+  String speed=server.arg("speed");
+  String time=server.arg("time");
+  
+  
+  
+  //set the pins for the variables and whether they are in- or output pins
+  int endstop1=9;
+  int endstop2=10;
+  pinMode(endstop1,INPUT_PULLUP);
+  pinMode(endstop2,INPUT_PULLUP);
+
+}

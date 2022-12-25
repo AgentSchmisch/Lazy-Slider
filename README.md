@@ -20,12 +20,13 @@ In order to setup the project quickly and easily it is mandatory to make some pr
 ### PlatformIO in Visual Studio Code
 
 In order to set up the Project in VS Code you can follow these steps
+
 - Install the latest version of Visual Studio Code [here](https://code.visualstudio.com/)
 - Setup PlatformIO in VS Code
-    - go to the extensions tab in VS Code and search for PlatformIO 
-    - install the extension 
-    - open the repository from GitHub
-    - compile and Upload the project to your microcontroller
+  - go to the extensions tab in VS Code and search for PlatformIO
+  - install the extension
+  - open the repository from GitHub
+  - compile and Upload the project to your microcontroller
 
 ## Installation
 

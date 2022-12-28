@@ -21,9 +21,11 @@
 #include <ESP8266mDNS.h>
 #include <ESP8266WebServer.h>
 #include <FS.h>   // Include the SPIFFS library
-#include <Stepper.h>
+#include <AccelStepper.h>
 
-Stepper stepper = Stepper(500,12,13,14,15);
+int stepsPerRevolution=2048;
+
+AccelStepper stepper(AccelStepper::HALF4WIRE,12,13,14,15);
 
 
 ESP8266WiFiMulti wifiMulti;     // Create an instance of the ESP8266WiFiMulti class, called 'wifiMulti'
@@ -83,7 +85,6 @@ if(STATICIP){
   
   server.on("/api/v1/slider",HTTP_POST,slider);
   server.on("/api/v1/turntable",HTTP_POST,turntable);
-  //server.on()
 }
 
 
@@ -142,19 +143,22 @@ void turntable(){
 
 
   String speed=server.arg("speed");
-  String time=server.arg("time");
+  String angle=server.arg("angle");
   Serial.println(speed);
-  Serial.println(time);
+  Serial.println(angle);
   Serial.println(direction);
 
-  stepper.setSpeed(speed.toInt()*(time.toInt()*60));
+  stepper.setSpeed(speed.toInt());
   
-    if(direction=="right")
-    stepper.step(-500);
-  
-  else
-  stepper.step(500);
+  if(direction=="right"){
+    stepper.moveTo(angle.toInt()/stepsPerRevolution);
+    stepper.run();
+  }
 
+  else{
+    stepper.moveTo((angle.toInt()/stepsPerRevolution)*(-1));
+    stepper.run();
+  }
 
 }
 
